@@ -60,7 +60,7 @@ class Tennis_Match {
 		$this->m_mWinner = false;
 		$this->m_sServer = $insServingTeam;
 		
-		printf( '<h3>Team %s is serving</h3>', $this->m_sServer );
+		// printf( '<h3>Team %s is serving</h3>', $this->m_sServer );
 	}
 	
 	public function __clone() {
@@ -133,8 +133,20 @@ class Tennis_Match {
 	}
 }
 
-$oMatch = new Tennis_Match( rand( 0, 1 ) == 0? 'a': 'b' );
-while ( !$oMatch->gameHasWinner() ) {
-	$sTeam = rand( 0, 1 ) == 0? 'a': 'b';
-	$oMatch->pointScored( $sTeam );
+function getP($prm) {
+	if (isset($_GET[$prm]))
+		return $_GET[$prm];
+	if (isset($_POST[$prm]))
+		return $_POST[$prm];
+	return null;
+}
+
+$cmd = getP('c');
+
+if (!isset($cmd)) {
+	$oMatch = new Tennis_Match( rand( 0, 1 ) == 0? 'a': 'b' );
+	while ( !$oMatch->gameHasWinner() ) {
+		$sTeam = rand( 0, 1 ) == 0? 'a': 'b';
+		$oMatch->pointScored( $sTeam );
+	}
 }
